@@ -10,5 +10,4 @@ Run the following command to install all required packages:
 pip install -r requirements.txt
 
 ### To start the game, execute:
-```sh
 python aidm.py
