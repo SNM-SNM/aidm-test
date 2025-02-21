@@ -353,7 +353,7 @@ def startDM(player: Character, story: Story):
                                    Classtype: Fighter, Wizard, Rogue, etc.
                                    Race: Human, Elf, Dwarf, Halfling, etc.
                                    Attributes:""" +
-                                    "\n".join([f"""  {attr} = A number from 1 - {story.gameruledict["max_attribute_point"]}""" for attr in story.gameruledict["attributes"]]) +
+                                    "\n".join([f"  {attr} = A number from 1 - {story.gameruledict["max_attribute_point"]}" for attr in story.gameruledict["attributes"]]) +
                                    """Alignment: Lawful, Neutral, Chaotic, Good, Evil, etc.
                                    Description: A short description for this character
                                    "
@@ -564,7 +564,7 @@ def battle(player: Character, story: Story):
                                    Classtype: (A class type that's aligned to the race below)
                                    Race: beasts (Wolves, bears, giant spiders, etc), humanoids (Goblins, orcs, kobolds, gnolls, lizardfolk, bandits, etc), undead(Skeletons, zombies, wights, ghouls, vampires, liches, etc), aberrations, dragons, fiends, celestials, elementals, giants, golems, fey (pixies, dryads, hags), monstrosities, oozes, plants (treants), swarms, shapechangers, legendary creatures, or just humans.
                                    Attributes:"""+
-                                    "\n".join([f"  {attr} = A number from 1 - {story.gameruledict["max_attribute_point"]}" for attr in story.gameruledict["attributes"]]) +
+                                    "\n".join([f"""  {attr} = A number from 1 - {story.gameruledict['max_attribute_point']}""" for attr in story.gameruledict["attributes"]]) +
                                     """Alignment: Lawful, Neutral, Chaotic, Good, Evil, etc.
                                    HP: A number from 20 to 200
                                    Description: A short description for this enemy
@@ -580,16 +580,12 @@ def battle(player: Character, story: Story):
         name = extract_response(response, "Enemy name"),
         classtype = extract_response(response, "Classtype"),
         race= extract_response(response, "Race"),
-        attributes = {
-            "Strength": int(extract_response(response, "Strength")),
-            "Intelligence": int(extract_response(response, "Intelligence")),
-            "Speed": int(extract_response(response, "Speed")),
-            "Charisma": int(extract_response(response, "Charisma"))
-        },
         alignment= extract_response(response, "Alignment"),
         hp = int(extract_response(response, "HP")),
         description = extract_response(response, "Description")
     )
+    for attr in story.gameruledict["attributes"]:
+        enemy.attributes[attr] = int(extract_response(choice, attr))
     story.add_npc(enemy)
     # Keep battling until the enemy's HP <= 0
     battling = True
@@ -626,11 +622,14 @@ def battle(player: Character, story: Story):
                                        The player has rolled a number greater than the enemy's and passed the previous battle: "{story.get_latest_event()}". This means the outcome of {optionName} is successful. Continue the story with this successful outcome. The infomation of the enemy is {enemy.charaInfo}. 
                                        If the player's option is to attack, you should give the enemy certain amount of damage. State the outcome of this attack and write the damage given to the enemy in a newline so that the player can see. You should write it in the following form:
                                        "
-                                        Damage: (you should decide the number of damage)
+                                        Damage: (you should decide the number of damage. If the player's attack is severe, you can give a higher number of damage (50+). If the player's attack is weak, you can give a lower number of damage(around 10 to 30))
                                         Description: (How the player cause the damage)
                                        "
                                        You must keep it in the form above and you must use the word "Damage" (Do not add any sign around it). You don't need to calculate the damage to enemy's HP. Just give a number of damage and describe how the player cause the damage.
                                        If the player's option is to run away or escape, you should write the description of the escape and ask the player what they would do next. You must write "You've escaped" at a new line at the end of your generated texts.
+                                       If the player's option is to heal,  you should write the description of the heal and you must write "You've successfully healed" and provide a number of HP healed at the end of your generated texts. 
+                                       Example of healing: "You've successfully healed. HP +20". You must write "HP" and "+" and keep a space between them.
+                                       Make an empty new line at the end of your generation.
                                        Write in second person present tense (you are), avoiding summary and letting scenes play out in real time, without skipping. Allow all characters to take the lead and let bad things happen to good people.
                                        """},], printChunk=True)
             # Record the damage
@@ -641,6 +640,8 @@ def battle(player: Character, story: Story):
                 user_input = command_input(player, story)
                 story.add_event("You do: " + user_input)
                 return
+            if("HP +" in response):
+                player.hp += int(extract_response(response, "HP"))
             if("Damage:" in response):
                 damage = int(extract_response(response, "Damage"))
                 enemy.hp -= damage
@@ -673,11 +674,12 @@ def battle(player: Character, story: Story):
                                        """},], printChunk=True)
                 story.add_event(response)
                 story.add_key_event(generateKeyEvent(response))
+                response = response[response.find("Reward") : ]
                 if("Golds" in response):
                     player.golds += int(extract_response(response, "Golds"))
-                elif("HP" in response):
+                if("HP" in response):
                     player.hp += int(extract_response(response, "HP"))
-                elif("New skill" in response):
+                if("New skill" in response):
                     skillName = extract_response(response, "New skill")
                     # skillDescription = response[(response.find("Description")) : response.find("Effect")]
                     skillDescription = extract_response(response, "Description", end_str="Effect")
@@ -780,6 +782,7 @@ def event(player: Character, story: Story):
                                        Penalty: HP -20
                                        Description:()
                                        "
+                                       You should always keep a space between the attribute (HP or Golds) and the sign (+ or -).
                                        Let the event and NPC be rich, diverse, and creative. Write in second person present tense (you are), avoiding summary and letting scenes play out in real time, without skipping. Allow all characters to take the lead and let bad things happen to good people.
                                        """},], printChunk=True)
     story.add_event(input_response)
@@ -846,6 +849,7 @@ def trade(player: Character, story: Story):
                                     You lose: (Golds -50) or (HP -20)
                                     You gain: (Golds +50) or (HP +20) or (New skill: Master Blacksmithing)
                                    "
+                                   You should always keep a space between the attribute (HP or Golds) and the sign (+ or -)
                                    If the player is trading for a new skill, you should generate the new skill in the following example form (assuming the player inputs that he/she wants to learn the skill of Master Blacksmithing by spending 100 Golds)
                                    An example of new skill (Note that you should design the skill with proper reasoning. You have to include the words: "New skill", "Skill Description", and "Effect". After the name of the skill, there should be a notation (one of the attributes) in the bracket indicating this skill's property (e.g. New skill: xxx (Strength)). 
                                     The skill type will be "{story.gameruledict["skill_impact"]["type"]}". For the effect, you must have a description of "{story.gameruledict["skill_impact"]["format"]}", where "value" is a proper reasonable value and "attribute" is one of the {len(story.gameruledict["attributes"])} character attributes ({story.gameruledict["attributes"]}). These are the only {len(story.gameruledict["attributes"])} attributes that you must use, do not add any other new attributes (Such as, do not make a skill and say "Add 5 points to your HP rolls"))
@@ -1071,7 +1075,7 @@ if __name__ == '__main__':
         # startFirstTrade(player, story)
         startStory(player, story)
     while True:
-        if(player.hp == 0):
+        if(player.hp <= 0):
             print("Your HP is 0. Game over.")
             break
         event_type = checkEvent(player, story)
