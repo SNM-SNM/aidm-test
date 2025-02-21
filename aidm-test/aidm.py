@@ -453,7 +453,7 @@ def checkEvent(player: Character, story: Story):
     response = gpt([{'role': 'user','content':
                                    f"""
                                    You, as the Dungeon Master, should decide what event type would happen next based on the latest story: "{story.get_latest_event()}", and the player's input: "{story.get_latest_player_action()}". 
-                                   The event type should only be one of the 5 following: Casual Event, Trade, Encounter, Battle, or None. You can generate "None" type event if and only if you think based on the latest story and the player's input, that the event type should be happening next doesn't align to 4 other types of event (e.g. the story can just continue without any event occurrence). All you need to do is just generate the event type, do not generate any content of the future event.
+                                   The event type should only be one of the 5 following: Casual Event, Trade, Encounter, Battle, or None. You can generate "None" type event if and only if you think based on the latest story and the player's input, that the event type should be happening next doesn't align to 4 other types of event (e.g. the story can just continue without any event occurrence. Or the player's input does not quite make sense). All you need to do is just generate the event type, do not generate any content of the future event.
                                    Let the event be rich, diverse, and creative. Write in second person present tense (you are), avoiding summary and letting scenes play out in real time, without skipping. Allow all characters to take the lead and let bad things happen to good people.
                                    """},], printChunk=False)
     # print(response)
@@ -891,8 +891,9 @@ def trade(player: Character, story: Story):
 def continueStory(player: Character, story: Story):
     response = gpt([{'role': 'user','content':
                                    f"""
-                                   Continue creating story (D&D) based on the character: "{player.charaInfo()}", the background: "{story.get_background()}", the previoius key events:"{story.get_all_key_events()}", and the latest story: "{story.get_latest_event()}". 
-                                   Your generation should be rich, diverse, creative, and reasonable based on the background information provided. Also your generation should be consistant with the latest story provided. At the end of your generation, ask what the player would do next (you don't need to generate options for this).
+                                   Continue creating story (D&D) based on the character: "{player.charaInfo()}", the background: "{story.get_background()}", the previoius key events:"{story.get_all_key_events()}", the latest story: "{story.get_latest_event()}, and the player's latest action:"{story.get_latest_player_action()}" ". 
+                                   Your generation should be rich, diverse, creative, and reasonable based on the background information provided. Also your generation should be consistant with the latest story and player's action provided. 
+                                   At the end of your generation, ask what the player would do next (you don't need to generate options for this).
                                    Write in second person present tense (you are), avoiding summary and letting scenes play out in real time, without skipping. Allow all characters to take the lead and let bad things happen to good people.
                                    """},], printChunk=True)
     story.add_event(response)
