@@ -2,7 +2,7 @@
 
 ## 📌 Installation
 
-Make sure you have **Python 3.8+** installed on your system.
+Git or download all files above. Make sure you have **Python 3.8+** installed on your system.
 
 ### 1️⃣ Install Dependencies
 Run the following command to install all required packages:
