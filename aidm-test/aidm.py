@@ -453,7 +453,12 @@ def checkEvent(player: Character, story: Story):
     response = gpt([{'role': 'user','content':
                                    f"""
                                    You, as the Dungeon Master, should decide what event type would happen next based on the latest story: "{story.get_latest_event()}", and the player's input: "{story.get_latest_player_action()}". 
-                                   The event type should only be one of the 5 following: Casual Event, Trade, Encounter, Battle, or None. You can generate "None" type event if and only if you think based on the latest story and the player's input, that the event type should be happening next doesn't align to 4 other types of event (e.g. the story can just continue without any event occurrence. Or the player's input does not quite make sense). All you need to do is just generate the event type, do not generate any content of the future event.
+                                   The event type should only be one of the 5 following: Casual Event, Trade, Encounter, Battle, or None. 
+                                   For Casual Event, the player might meet NPC to get some help/free reward.
+                                   For Trade, the player might meet NPC to trade.
+                                   For Encounter, the player might meed hostile NPC.
+                                   For Battle, if the player initiatively attacks.
+                                   You can generate "None" type event if and only if you think based on the latest story and the player's input, that the event type should be happening next doesn't align to 4 other types of event (e.g. the story can just continue without any event occurrence. Or the player's input does not quite make sense). All you need to do is just generate the event type, do not generate any content of the future event.
                                    Let the event be rich, diverse, and creative. Write in second person present tense (you are), avoiding summary and letting scenes play out in real time, without skipping. Allow all characters to take the lead and let bad things happen to good people.
                                    """},], printChunk=False)
     # print(response)
