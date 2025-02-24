@@ -20,7 +20,7 @@ python aidm.py
 ```
 
 ## 👍How to play
-After running the game and inputting your character name, the game begins and the AI DM will start storytelling. You may input your action when the AI DM tells you what would you like to do next. The event outcomes would be based on your choice and random dice-rolling (based on your character's attributes). 
+After running the game and inputting your character name, the game begins and the AI DM will start storytelling. The LLM will generates the world background and provided you with characters to choose. Your story then begins, and you may input your action when the AI DM tells you what you would like to do next. The event outcomes would be based on your choice and random dice-rolling (based on your character's attributes).
 
 To better improve the game experience, there are some helper-commands in the game that you may use to review and save your character's info and the story. 
 ```sh
