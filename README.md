@@ -24,8 +24,13 @@ After running the game and inputting your character name, the game begins and th
 
 To better improve the game experience, there are some helper-commands in the game that you may use to review and save your character's info and the story. 
 ```sh
-### When in game, use the following command to see commands available
-/help
+### Available commands:
+/help -> Shows all commands
+/me -> Shows the character information of the player
+/save [file_name] -> Save the story so far into 2 txt file (story and character info).
+/read [file_name] -> (Might not work perfectly) Load a saved game from 2 txt file (story and character info). 
+/events -> Shows key events happened
+/rule [rule_type] [new_value] -> Update the game rule
 ```
 
 ## ☑️Feedback
