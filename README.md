@@ -19,7 +19,7 @@ pip install -r requirements.txt
 python aidm.py
 ```
 
-### How to play
+## 👍How to play
 After running the game and inputting your character name, the game begins and the AI DM will start storytelling. You may input your action when the AI DM tells you what would you like to do next. The event outcomes would be based on your choice and random dice-rolling (based on your character's attributes). 
 To better improve the game experience, there are some helper-commands in the game that you may use to review and save your character's info and the story. 
 ```sh
@@ -27,7 +27,7 @@ To better improve the game experience, there are some helper-commands in the gam
 /help
 ```
 
-### Feedback
+## ☑️Feedback
 If you may, engage in a user study and fill the [survey](https://forms.office.com/e/d8gfynZGD7) to evaluate the game. You may rate the game based on how well the AI DM is achieving these tasks as a dungeon master:
   - General information - How would you rate your overall experience with the AI DM?
   - World Building - How well did the AI describe the game world, including its geography, cultures, and history?
