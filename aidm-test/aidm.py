@@ -353,7 +353,7 @@ def startDM(player: Character, story: Story):
                                    Classtype: Fighter, Wizard, Rogue, etc.
                                    Race: Human, Elf, Dwarf, Halfling, etc.
                                    Attributes:""" +
-                                    "\n".join([f"  {attr} = A number from 1 - {story.gameruledict["max_attribute_point"]}" for attr in story.gameruledict["attributes"]]) +
+                                    "\n".join([f"  {attr} = A number from 1 - {story.gameruledict['max_attribute_point']}" for attr in story.gameruledict['attributes']]) +
                                    """Alignment: Lawful, Neutral, Chaotic, Good, Evil, etc.
                                    Description: A short description for this character
                                    "
@@ -590,7 +590,7 @@ def battle(player: Character, story: Story):
         description = extract_response(response, "Description")
     )
     for attr in story.gameruledict["attributes"]:
-        enemy.attributes[attr] = int(extract_response(choice, attr))
+        enemy.attributes[attr] = int(extract_response(response, attr))
     story.add_npc(enemy)
     # Keep battling until the enemy's HP <= 0
     battling = True
