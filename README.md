@@ -29,7 +29,7 @@ To better improve the game experience, there are some helper-commands in the gam
 /me -> Shows the character information of the player
 /save [file_name] -> Save the story so far into 2 txt file (story and character info).
 /read [file_name] -> (Might not work perfectly) Load a saved game from 2 txt file (story and character info). 
-/events -> Shows key events happened so far(in a summarization-way, would be usful for those who don't want to read a tons of paragraphs and want to get a brief idea of what happened)
+/events -> Shows key events happened so far(in a summarization-way, would be usful for those who don't want to read a tons of paragraphs but just want to get a brief idea of what happened)
 /rule [rule_type] [new_value] -> Update the game rule
 ```
 
