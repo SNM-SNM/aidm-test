@@ -454,14 +454,60 @@ def checkEvent(player: Character, story: Story):
     """
     response = gpt([{'role': 'user','content':
                                    f"""
-                                   You, as the Dungeon Master, should decide what event type would happen next based on the latest story: "{story.get_latest_event()}", and the player's input: "{story.get_latest_player_action()}". 
-                                   The event type should only be one of the 5 following: Casual Event, Trade, Encounter, Battle, or None. 
-                                   For Casual Event, the player might meet NPC to get some help/free reward.
-                                   For Trade, the player might meet NPC to trade.
-                                   For Encounter, the player might meed hostile NPC.
-                                   For Battle, if the player initiatively attacks.
-                                   You can generate "None" type event if and only if you think based on the latest story and the player's input, that the event type should be happening next doesn't align to 4 other types of event (e.g. the story can just continue without any event occurrence. Or the player's input does not quite make sense). All you need to do is just generate the event type, do not generate any content of the future event.
-                                   Let the event be rich, diverse, and creative. Write in second person present tense (you are), avoiding summary and letting scenes play out in real time, without skipping. Allow all characters to take the lead and let bad things happen to good people.
+                                   You, As the Dungeon Master, analyze the following inputs to determine the next event type:
+
+                                    Latest Story Context: “{story.get_latest_event()}”
+                                    Player's Latest Action: “{story.get_latest_player_action()}”
+                                    Event Type Selection Rules:
+                                    Choose ONLY ONE of these 5 event types:
+
+                                    1. Casual Event
+
+                                    Trigger: Player interaction aligns with non-hostile NPC assistance/rewards.
+                                    Examples:
+                                    A traveling cleric offers free healing potions.
+                                    A village elder shares critical story information.
+                                    A friendly creature provides navigation help.
+
+                                    2. Trade
+
+                                    Trigger: Player demonstrates resource-seeking behavior.
+                                    Examples:
+                                    A merchant proposes item exchanges (e.g., “3 wolf pelts for a better sword”).
+                                    A blacksmith offers weapon upgrades for rare materials.
+                                    A mystic trades scrolls for completed quests.
+
+                                    3. Encounter
+
+                                    Trigger: Environmental/contextual hostility without direct player provocation.
+                                    Examples:
+                                    Bandits ambush the player on the road.
+                                    Territorial beasts block a mountain pass.
+                                    Cursed spirits manifest in ancient ruins.
+
+                                    4. Battle
+
+                                    Trigger: Player explicitly initiates combat.
+                                    Examples:
+                                    Player attacks a guarded enemy camp.
+                                    Player challenges a tavern bully.
+                                    Player attempts to steal from armed guards.
+
+                                    5. None
+
+                                    Trigger: No event insertion required for narrative continuity.
+                                    Conditions:
+                                    Story progression doesn't require interruption.
+                                    Player action is purely transitional (e.g., “I keep walking northwest”).
+                                    Existing plot threads need time to develop organically.
+
+                                    Validation Checklist:
+                                    Event type strictly matches one of the 5 defined categories
+                                    “None” is only used when all other types are contextually inappropriate
+                                    Player agency from “{story.get_latest_player_action()}” is preserved
+                                    Event severity escalates/de-escalates appropriately based on story progression
+
+                                    All you need to do is just generate the event type, do not generate any content of the future event.
                                    """},], printChunk=False)
     # print(response)
     if("Casual Event" in response):
