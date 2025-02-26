@@ -241,7 +241,9 @@ def command_input(character: Character, story: Story, uinput = ""):
                 print("\n" + story.get_latest_event())
             return command_input(character, story)
         elif(uinput == ("/events")):
-            print(story.get_all_key_events())
+            print("Events so far:")
+            for item in story.keyevents:
+                print(f"- {item}")
             return command_input(character, story)
         elif uinput.startswith("/rule"):
             parts = uinput.split()
