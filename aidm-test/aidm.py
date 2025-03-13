@@ -26,7 +26,7 @@ class Character:
         if self.story:
             self.attributes = {attr: 0 for attr in self.story.gameruledict["attributes"]}
         else:
-            # 默认属性
+            # Default Attributes
             self.attributes = {
                 "Strength": 0,
                 "Intelligence": 0,
@@ -266,7 +266,7 @@ def command_input(character: Character, story: Story, uinput = ""):
                   Help commands:
                   /me -> Shows the character information of the player
                   /save [file_name] -> Save the story so far into 2 txt file (story and character info).
-                  /read [file_name] -> (Might not work perfectly) Load a saved game from 2 txt file (story and character info). 
+                  /read [file_name] -> (Might not work perfectly) Load a saved game from 2 txt files (story and character info). 
                   /events -> Shows key events happened
                   /rule [rule_type] [new_value] -> Update the game rule
                   """)
@@ -355,7 +355,7 @@ def startDM(player: Character, story: Story):
                                    Classtype: Fighter, Wizard, Rogue, etc.
                                    Race: Human, Elf, Dwarf, Halfling, etc.
                                    Attributes:""" +
-                                    "\n".join([f"  {attr} = A number from 1 - {story.gameruledict['max_attribute_point']}" for attr in story.gameruledict['attributes']]) +
+                                    "\n".join([f"""  {attr} = A number from 1 - {story.gameruledict['max_attribute_point']}""" for attr in story.gameruledict['attributes']]) +
                                    """Alignment: Lawful, Neutral, Chaotic, Good, Evil, etc.
                                    Description: A short description for this character
                                    "
@@ -387,7 +387,7 @@ def startDM(player: Character, story: Story):
                         Classtype: custom_classtype
                         Race: custom_race
                         Attributes:"""+
-                          "\n".join([f"  {attr} = A number from 1 - {story.gameruledict["max_attribute_point"]}" for attr in story.gameruledict["attributes"]]) +
+                          "\n".join([f"""  {attr} = A number from 1 - {story.gameruledict['max_attribute_point']}""" for attr in story.gameruledict["attributes"]]) +
                         """Alignment: Lawful, Neutral, Chaotic, Good, Evil, etc.
                         Description: A short description for this character
                         "
